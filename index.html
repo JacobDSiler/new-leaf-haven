@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Leaf Healing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #7a9e7e;
+    --sage-light: #a8c5a0;
+    --sage-pale: #e8f0e5;
+    --forest: #2d4a35;
+    --moss: #4a6741;
+    --earth: #8b7355;
+    --cream: #f5f0e8;
+    --warm-white: #faf8f4;
+    --text: #2a2a22;
+    --text-soft: #5a5a4a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    background: var(--warm-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(250, 248, 244, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(122, 158, 126, 0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--forest);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-soft);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--sage); }
+
+  .nav-cta {
+    background: var(--forest) !important;
+    color: var(--cream) !important;
+    padding: 0.6rem 1.4rem !important;
+    border-radius: 2rem;
+    transition: background 0.3s !important;
+  }
+
+  .nav-cta:hover { background: var(--moss) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10rem 5rem 6rem 8rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--forest);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+
+  .hero-title em { font-style: italic; color: var(--sage); }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-soft);
+    max-width: 400px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.7s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.9s forwards;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 0.9rem 2.2rem;
+    background: var(--forest);
+    color: var(--cream);
+    text-decoration: none;
+    border-radius: 3rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    transition: all 0.3s;
+  }
+
+  .btn-primary:hover { background: var(--moss); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,74,53,0.25); }
+
+  .btn-outline {
+    display: inline-block;
+    padding: 0.9rem 2.2rem;
+    border: 1px solid var(--sage);
+    color: var(--forest);
+    text-decoration: none;
+    border-radius: 3rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    transition: all 0.3s;
+  }
+
+  .btn-outline:hover { background: var(--sage-pale); transform: translateY(-2px); }
+
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at 60% 40%, var(--sage-pale) 0%, transparent 70%),
+                radial-gradient(ellipse at 30% 70%, rgba(168,197,160,0.3) 0%, transparent 60%);
+    overflow: hidden;
+  }
+
+  .float-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.12;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .fc1 { width: 180px; height: 180px; background: var(--sage); top: 8%; right: 8%; }
+  .fc2 { width: 80px; height: 80px; background: var(--earth); bottom: 18%; left: 12%; animation-delay: 2s; }
+  .fc3 { width: 120px; height: 120px; background: var(--sage-light); bottom: 33%; right: 5%; animation-delay: 1s; }
+
+  .hero-svg {
+    position: relative;
+    z-index: 2;
+    width: 340px;
+    height: 460px;
+    opacity: 0;
+    animation: fadeIn 1s 0.8s forwards;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* SHARED */
+  section { padding: 6rem 8rem; }
+
+  .section-tag {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    color: var(--forest);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--sage); }
+
+  /* SESSIONS */
+  .sessions {
+    background: var(--forest);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sessions::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -8%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(122,158,126,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .sessions .section-title { color: var(--cream); }
+  .sessions .section-tag { color: var(--sage-light); }
+
+  .sessions-lead {
+    color: rgba(245,240,232,0.65);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 500px;
+    margin-bottom: 4rem;
+  }
+
+  .sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .session-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(168,197,160,0.2);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    transition: all 0.4s;
+    cursor: pointer;
+  }
+
+  .session-card:hover { transform: translateY(-6px); border-color: rgba(168,197,160,0.5); background: rgba(255,255,255,0.08); }
+
+  .session-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(122,158,126,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  .session-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+  }
+
+  .session-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 1.5rem;
+  }
+
+  .session-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(168,197,160,0.15);
+  }
+
+  .session-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--sage-light);
+  }
+
+  .session-duration {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.4);
+    text-transform: uppercase;
+  }
+
+  .btn-book {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.65rem 1.4rem;
+    background: transparent;
+    border: 1px solid var(--sage-light);
+    color: var(--sage-light);
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .btn-book:hover { background: var(--sage-light); color: var(--forest); }
+
+  /* AUDIO */
+  .audio-section { background: var(--cream); }
+
+  .audio-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 3.5rem;
+  }
+
+  .audio-lead {
+    color: var(--text-soft);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  .audio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+
+  .audio-card {
+    background: var(--warm-white);
+    border-radius: 1.2rem;
+    padding: 1.8rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    transition: all 0.3s;
+    border: 1px solid rgba(122,158,126,0.1);
+    cursor: pointer;
+  }
+
+  .audio-card:hover { transform: translateX(4px); border-color: var(--sage-light); box-shadow: 0 4px 20px rgba(122,158,126,0.1); }
+
+  .audio-thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 0.8rem;
+    background: linear-gradient(135deg, var(--sage-pale), var(--sage-light));
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .play-btn {
+    position: absolute;
+    inset: 0;
+    background: rgba(45,74,53,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 1rem;
+    color: white;
+  }
+
+  .audio-card:hover .play-btn { opacity: 1; }
+
+  .audio-info { flex: 1; }
+
+  .audio-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--forest);
+    margin-bottom: 0.25rem;
+    font-weight: 400;
+  }
+
+  .audio-meta { font-size: 0.75rem; color: var(--text-soft); }
+
+  .audio-tag {
+    display: inline-block;
+    margin-top: 0.4rem;
+    padding: 0.15rem 0.65rem;
+    border-radius: 2rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tag-free { background: rgba(122,158,126,0.15); color: var(--moss); }
+  .tag-premium { background: rgba(139,115,85,0.1); color: var(--earth); }
+
+  .waveform {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    height: 20px;
+    margin-top: 0.4rem;
+  }
+
+  .waveform span {
+    display: block;
+    width: 3px;
+    background: var(--sage-light);
+    border-radius: 2px;
+    animation: wave 1.2s ease-in-out infinite;
+  }
+
+  @keyframes wave {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+  }
+
+  /* SHOP */
+  .shop { background: var(--sage-pale); }
+
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .shop-card {
+    background: var(--warm-white);
+    border-radius: 1.2rem;
+    overflow: hidden;
+    transition: all 0.4s;
+    border: 1px solid rgba(122,158,126,0.1);
+  }
+
+  .shop-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(45,74,53,0.12); }
+
+  .shop-img {
+    height: 160px;
+    background: linear-gradient(135deg, var(--sage-pale), var(--sage-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    position: relative;
+  }
+
+  .product-type {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 2rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .type-digital { background: rgba(45,74,53,0.85); color: var(--cream); }
+  .type-physical { background: rgba(139,115,85,0.85); color: var(--cream); }
+
+  .shop-body { padding: 1.4rem; }
+
+  .shop-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--forest);
+    margin-bottom: 0.4rem;
+    font-weight: 400;
+  }
+
+  .shop-desc { font-size: 0.78rem; color: var(--text-soft); line-height: 1.6; margin-bottom: 1rem; }
+
+  .shop-footer { display: flex; justify-content: space-between; align-items: center; }
+
+  .shop-price { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--forest); }
+
+  .btn-add {
+    padding: 0.45rem 1rem;
+    background: var(--forest);
+    color: var(--cream);
+    border: none;
+    border-radius: 2rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    transition: all 0.3s;
+  }
+
+  .btn-add:hover { background: var(--moss); }
+
+  /* ABOUT */
+  .about-strip {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    min-height: 480px;
+  }
+
+  .about-visual {
+    background: linear-gradient(160deg, var(--sage-pale) 0%, rgba(122,158,126,0.25) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 1px solid rgba(122,158,126,0.3);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseRing 3.5s ease-in-out infinite;
+  }
+
+  @keyframes pulseRing {
+    0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 0.7; }
+    50% { transform: translate(-50%,-50%) scale(1.12); opacity: 0.2; }
+  }
+
+  .portrait-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sage-light), var(--moss));
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4.5rem;
+    box-shadow: 0 20px 60px rgba(45,74,53,0.25);
+  }
+
+  .about-content {
+    padding: 5rem 5rem 5rem 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--warm-white);
+  }
+
+  .about-content p {
+    color: var(--text-soft);
+    line-height: 1.9;
+    font-size: 0.95rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .signature {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--sage);
+    margin-top: 0.5rem;
+    font-weight: 300;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    background: var(--forest);
+    color: var(--cream);
+    text-align: center;
+  }
+
+  .testimonials .section-tag { color: var(--sage-light); }
+  .testimonials .section-title { color: var(--cream); }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  .testi-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(168,197,160,0.15);
+    text-align: left;
+    transition: transform 0.3s;
+  }
+
+  .testi-card:hover { transform: translateY(-4px); }
+
+  .stars { color: var(--sage-light); font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 1rem; }
+
+  .testi-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.9);
+    margin-bottom: 1.5rem;
+  }
+
+  .testi-author { font-size: 0.76rem; letter-spacing: 0.1em; color: var(--sage-light); text-transform: uppercase; }
+
+  /* NEWSLETTER */
+  .newsletter { background: var(--cream); text-align: center; padding: 5rem 8rem; }
+
+  .newsletter-inner { max-width: 520px; margin: 0 auto; }
+
+  .newsletter p { color: var(--text-soft); margin-bottom: 2.5rem; line-height: 1.8; font-size: 0.95rem; }
+
+  .newsletter-form {
+    display: flex;
+    max-width: 420px;
+    margin: 0 auto;
+    border-radius: 3rem;
+    overflow: hidden;
+    border: 1.5px solid var(--sage);
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 0.9rem 1.5rem;
+    border: none;
+    background: transparent;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    color: var(--text);
+    outline: none;
+  }
+
+  .newsletter-form input::placeholder { color: var(--text-soft); }
+
+  .newsletter-form button {
+    padding: 0.9rem 1.8rem;
+    background: var(--forest);
+    color: var(--cream);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .newsletter-form button:hover { background: var(--moss); }
+
+  /* FOOTER */
+  footer {
+    background: var(--text);
+    color: rgba(245,240,232,0.5);
+    padding: 3rem 8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--cream);
+    font-weight: 300;
+  }
+
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+
+  .footer-links a {
+    text-decoration: none;
+    color: rgba(245,240,232,0.45);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--sage-light); }
+
+  .footer-copy { font-size: 0.72rem; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--warm-white);
+    border-radius: 2rem;
+    padding: 3rem;
+    max-width: 460px;
+    width: 90%;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+    position: relative;
+  }
+
+  .modal-overlay.active .modal { transform: translateY(0); }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--forest);
+    margin-bottom: 0.4rem;
+    font-weight: 300;
+  }
+
+  .modal-subtitle { font-size: 0.85rem; color: var(--text-soft); margin-bottom: 2rem; line-height: 1.6; }
+
+  .modal-close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-soft);
+    line-height: 1;
+  }
+
+  .form-group { margin-bottom: 1.1rem; }
+
+  .form-label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    padding: 0.8rem 1.1rem;
+    border: 1.5px solid rgba(122,158,126,0.3);
+    border-radius: 0.75rem;
+    background: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+  }
+
+  .form-input:focus, .form-select:focus { border-color: var(--sage); }
+
+  .btn-submit {
+    width: 100%;
+    padding: 0.95rem;
+    background: var(--forest);
+    color: var(--cream);
+    border: none;
+    border-radius: 0.75rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.3s;
+  }
+
+  .btn-submit:hover { background: var(--moss); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 2rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 8rem 2rem 3rem; }
+    .hero-right { display: none; }
+    .sessions-grid, .testi-grid { grid-template-columns: 1fr; }
+    .audio-header { grid-template-columns: 1fr; }
+    .audio-grid { grid-template-columns: 1fr; }
+    .shop-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-strip { grid-template-columns: 1fr; }
+    .about-visual { min-height: 200px; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2.5rem 2rem; }
+    .newsletter { padding: 4rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">🌿 Green Leaf Healing</a>
+  <ul class="nav-links">
+    <li><a href="#sessions">Sessions</a></li>
+    <li><a href="#audio">Meditations</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#sessions" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<section class="hero" style="padding:0;" id="home">
+  <div class="hero-left">
+    <p class="hero-eyebrow">A sanctuary for inner peace</p>
+    <h1 class="hero-title">Come home<br>to <em>stillness</em></h1>
+    <p class="hero-subtitle">Guided meditations, live healing sessions, and mindful resources to help you find peace in the everyday.</p>
+    <div class="hero-actions">
+      <a href="#sessions" class="btn-primary">Book a Live Session</a>
+      <a href="#audio" class="btn-outline">Explore Meditations</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="float-circle fc1"></div>
+    <div class="float-circle fc2"></div>
+    <div class="float-circle fc3"></div>
+    <svg class="hero-svg" viewBox="0 0 340 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer glow circles -->
+      <circle cx="170" cy="180" r="130" stroke="rgba(122,158,126,0.12)" stroke-width="1"/>
+      <circle cx="170" cy="180" r="95" fill="rgba(232,240,229,0.5)" stroke="rgba(122,158,126,0.2)" stroke-width="1"/>
+      <circle cx="170" cy="180" r="65" fill="rgba(168,197,160,0.2)"/>
+      <!-- Person figure -->
+      <circle cx="170" cy="155" r="26" fill="rgba(74,103,65,0.22)"/>
+      <path d="M130 210 Q170 192 210 210 L218 290 Q170 308 122 290 Z" fill="rgba(74,103,65,0.18)"/>
+      <!-- Lotus petals -->
+      <ellipse cx="170" cy="340" rx="75" ry="18" fill="rgba(122,158,126,0.1)"/>
+      <path d="M135 335 Q170 310 205 335" stroke="rgba(122,158,126,0.3)" stroke-width="1.5" fill="none"/>
+      <path d="M120 345 Q170 315 220 345" stroke="rgba(122,158,126,0.2)" stroke-width="1" fill="none"/>
+      <path d="M108 355 Q170 320 232 355" stroke="rgba(122,158,126,0.15)" stroke-width="1" fill="none"/>
+      <!-- Floating orbs -->
+      <circle cx="85" cy="140" r="11" fill="rgba(168,197,160,0.3)" stroke="rgba(122,158,126,0.2)" stroke-width="1">
+        <animate attributeName="cy" values="140;124;140" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="258" cy="200" r="7" fill="rgba(168,197,160,0.25)">
+        <animate attributeName="cy" values="200;186;200" dur="3.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="112" cy="260" r="5" fill="rgba(139,115,85,0.2)">
+        <animate attributeName="cy" values="260;250;260" dur="5s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Energy lines -->
+      <line x1="170" y1="50" x2="170" y2="15" stroke="rgba(122,158,126,0.2)" stroke-width="1" stroke-dasharray="4 6"/>
+      <line x1="240" y1="95" x2="275" y2="65" stroke="rgba(122,158,126,0.15)" stroke-width="1" stroke-dasharray="4 6"/>
+      <line x1="100" y1="95" x2="65" y2="65" stroke="rgba(122,158,126,0.15)" stroke-width="1" stroke-dasharray="4 6"/>
+      <!-- Leaf decorations -->
+      <path d="M290 370 C290 348 320 338 328 358 C318 352 298 364 290 370Z" fill="rgba(122,158,126,0.3)"/>
+      <path d="M42 400 C52 378 82 384 78 404 C68 394 52 400 42 400Z" fill="rgba(122,158,126,0.25)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- SESSIONS -->
+<section class="sessions" id="sessions">
+  <p class="section-tag">Live 1:1 Experience</p>
+  <h2 class="section-title">Healing sessions<br><em>designed for you</em></h2>
+  <p class="sessions-lead">Each session is a deeply personal experience. Together we'll create space for healing, clarity, and restoration.</p>
+  <div class="sessions-grid">
+    <div class="session-card">
+      <div class="session-icon">🌿</div>
+      <div class="session-name">Intro Session</div>
+      <p class="session-desc">A gentle introduction to guided meditation. Perfect if you're new to the practice or simply looking to begin again.</p>
+      <div class="session-meta">
+        <span class="session-price">€45</span>
+        <span class="session-duration">45 min</span>
+      </div>
+      <button class="btn-book" onclick="openModal('Intro Session', '€45', '45 min')">Book Now</button>
+    </div>
+    <div class="session-card">
+      <div class="session-icon">🌸</div>
+      <div class="session-name">Deep Healing</div>
+      <p class="session-desc">An immersive session focusing on emotional release, nervous system regulation, and restoration of inner calm.</p>
+      <div class="session-meta">
+        <span class="session-price">€75</span>
+        <span class="session-duration">60 min</span>
+      </div>
+      <button class="btn-book" onclick="openModal('Deep Healing Session', '€75', '60 min')">Book Now</button>
+    </div>
+    <div class="session-card">
+      <div class="session-icon">✨</div>
+      <div class="session-name">Monthly Journey</div>
+      <p class="session-desc">Four sessions across a month — a committed, transformational path with continuity and ongoing personal support.</p>
+      <div class="session-meta">
+        <span class="session-price">€240</span>
+        <span class="session-duration">4 × 60 min</span>
+      </div>
+      <button class="btn-book" onclick="openModal('Monthly Journey', '€240', '4 sessions')">Book Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIO -->
+<section class="audio-section" id="audio">
+  <div class="audio-header">
+    <div>
+      <p class="section-tag">Guided Meditations</p>
+      <h2 class="section-title">Listen &amp;<br><em>let go</em></h2>
+    </div>
+    <p class="audio-lead">A growing library of audio meditations. Some are freely available — others are part of the premium collection for members and session clients.</p>
+  </div>
+  <div class="audio-grid">
+    <div class="audio-card">
+      <div class="audio-thumb">🌊<div class="play-btn">▶</div></div>
+      <div class="audio-info">
+        <div class="audio-title">Morning Ground &amp; Centre</div>
+        <div class="audio-meta">12 min · Body scan</div>
+        <span class="audio-tag tag-free">Free</span>
+        <div class="waveform" id="w1"></div>
+      </div>
+    </div>
+    <div class="audio-card">
+      <div class="audio-thumb">🌙<div class="play-btn">▶</div></div>
+      <div class="audio-info">
+        <div class="audio-title">Sleep Sanctuary</div>
+        <div class="audio-meta">24 min · Yoga nidra</div>
+        <span class="audio-tag tag-premium">Premium</span>
+        <div class="waveform" id="w2"></div>
+      </div>
+    </div>
+    <div class="audio-card">
+      <div class="audio-thumb">💨<div class="play-btn">▶</div></div>
+      <div class="audio-info">
+        <div class="audio-title">Anxiety Release Breath</div>
+        <div class="audio-meta">8 min · Breathwork</div>
+        <span class="audio-tag tag-free">Free</span>
+        <div class="waveform" id="w3"></div>
+      </div>
+    </div>
+    <div class="audio-card">
+      <div class="audio-thumb">💛<div class="play-btn">▶</div></div>
+      <div class="audio-info">
+        <div class="audio-title">Heart Opening Visualisation</div>
+        <div class="audio-meta">18 min · Loving kindness</div>
+        <span class="audio-tag tag-premium">Premium</span>
+        <div class="waveform" id="w4"></div>
+      </div>
+    </div>
+    <div class="audio-card">
+      <div class="audio-thumb">🌱<div class="play-btn">▶</div></div>
+      <div class="audio-info">
+        <div class="audio-title">Forest Walk Meditation</div>
+        <div class="audio-meta">15 min · Nature immersion</div>
+        <span class="audio-tag tag-premium">Premium</span>
+        <div class="waveform" id="w5"></div>
+      </div>
+    </div>
+    <div class="audio-card">
+      <div class="audio-thumb">🌅<div class="play-btn">▶</div></div>
+      <div class="audio-info">
+        <div class="audio-title">Evening Wind Down</div>
+        <div class="audio-meta">10 min · Relaxation</div>
+        <span class="audio-tag tag-free">Free</span>
+        <div class="waveform" id="w6"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="shop" id="shop">
+  <p class="section-tag">The Healing Shop</p>
+  <h2 class="section-title">Resources to carry<br><em>the practice home</em></h2>
+  <div class="shop-grid">
+    <div class="shop-card">
+      <div class="shop-img">📖<span class="product-type type-digital">Digital PDF</span></div>
+      <div class="shop-body">
+        <div class="shop-name">30-Day Meditation Journal</div>
+        <p class="shop-desc">Daily prompts and reflections to build a sustainable, personal mindfulness practice.</p>
+        <div class="shop-footer"><span class="shop-price">€12</span><button class="btn-add">Add to Cart</button></div>
+      </div>
+    </div>
+    <div class="shop-card">
+      <div class="shop-img">🌿<span class="product-type type-physical">Physical</span></div>
+      <div class="shop-body">
+        <div class="shop-name">Herbal Smudge Bundle</div>
+        <p class="shop-desc">Hand-tied sage, rosemary &amp; lavender. Perfect for clearing your space before meditation.</p>
+        <div class="shop-footer"><span class="shop-price">€18</span><button class="btn-add">Add to Cart</button></div>
+      </div>
+    </div>
+    <div class="shop-card">
+      <div class="shop-img">🧘<span class="product-type type-digital">Digital PDF</span></div>
+      <div class="shop-body">
+        <div class="shop-name">Beginners Guide to Meditation</div>
+        <p class="shop-desc">A beautifully illustrated guide covering breathwork, posture, intention-setting and more.</p>
+        <div class="shop-footer"><span class="shop-price">€9</span><button class="btn-add">Add to Cart</button></div>
+      </div>
+    </div>
+    <div class="shop-card">
+      <div class="shop-img">🕯️<span class="product-type type-physical">Physical</span></div>
+      <div class="shop-body">
+        <div class="shop-name">Intention Candle</div>
+        <p class="shop-desc">Hand-poured soy candle with cedarwood, frankincense &amp; bergamot. 40-hour burn time.</p>
+        <div class="shop-footer"><span class="shop-price">€24</span><button class="btn-add">Add to Cart</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about-strip" id="about">
+  <div class="about-visual">
+    <div class="portrait-circle">🌿</div>
+  </div>
+  <div class="about-content">
+    <p class="section-tag">About Your Guide</p>
+    <h2 class="section-title">A practice rooted<br>in <em>compassion</em></h2>
+    <p>I've spent over a decade exploring the healing arts — from mindfulness-based stress reduction to somatic bodywork, breathwork, and energy healing. Green Leaf Healing grew from my own journey back to wholeness.</p>
+    <p>I believe that stillness is not something we find outside ourselves — it's something we remember. My role is simply to help you remember.</p>
+    <p>Each session, recording, and resource I create is made with the sincere intention of helping you feel a little more at home in yourself.</p>
+    <div class="signature">with love</div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <p class="section-tag">Voices from the Community</p>
+  <h2 class="section-title">What people are<br><em>experiencing</em></h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">"I came in carrying so much anxiety. The session left me feeling lighter than I have in years. It was like being guided home."</p>
+      <div class="testi-author">— Siobhán, Dublin</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">"The sleep meditation has become my nightly ritual. I've struggled with insomnia for years and this genuinely, truly helps."</p>
+      <div class="testi-author">— Marcus, London</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">"The 30-day journal was a beautiful companion through a difficult time. Simple, grounding, and full of warmth."</p>
+      <div class="testi-author">— Aoife, Cork</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <p class="section-tag">Stay Connected</p>
+    <h2 class="section-title">Free meditations &amp;<br><em>gentle guidance</em></h2>
+    <p>Join the Green Leaf community. You'll receive a free 10-minute morning meditation instantly, plus occasional reflections and early access to new sessions.</p>
+    <form class="newsletter-form" onsubmit="return false;">
+      <input type="email" placeholder="Your email address">
+      <button type="submit">Join</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">🌿 Green Leaf Healing</div>
+  <ul class="footer-links">
+    <li><a href="#sessions">Sessions</a></li>
+    <li><a href="#audio">Meditations</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#">Privacy</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Green Leaf Healing. Made with care.</p>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title" id="modalSessionName">Book a Session</div>
+    <p class="modal-subtitle" id="modalSessionMeta"></p>
+    <form onsubmit="return false;">
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="First &amp; last name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preferred Day</label>
+        <select class="form-select">
+          <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+          <option>Thursday</option><option>Friday</option><option>Saturday</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preferred Time</label>
+        <select class="form-select">
+          <option>Morning (9am–12pm)</option>
+          <option>Afternoon (12pm–4pm)</option>
+          <option>Evening (4pm–7pm)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Anything you'd like me to know?</label>
+        <input type="text" class="form-input" placeholder="Optional…">
+      </div>
+      <button type="button" class="btn-submit" onclick="submitBooking()">Request Booking</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Waveforms
+  for (let i = 1; i <= 6; i++) {
+    const wf = document.getElementById('w' + i);
+    for (let j = 0; j < 10; j++) {
+      const s = document.createElement('span');
+      const h = Math.random() * 60 + 30;
+      s.style.cssText = `height:${h}%;animation-delay:${j * 0.1}s`;
+      wf.appendChild(s);
+    }
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.session-card, .audio-card, .shop-card, .testi-card').forEach(el => {
+    el.style.cssText += 'opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;';
+    observer.observe(el);
+  });
+
+  // Modal
+  function openModal(name, price, duration) {
+    document.getElementById('modalSessionName').textContent = name;
+    document.getElementById('modalSessionMeta').textContent = `${duration} · ${price} · We'll confirm your booking by email within 24 hours.`;
+    document.getElementById('bookingModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('bookingModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('bookingModal').addEventListener('click', e => {
+    if (e.target.id === 'bookingModal') closeModal();
+  });
+
+  function submitBooking() {
+    document.getElementById('modalContent').innerHTML = `
+      <div style="text-align:center;padding:2rem 0;">
+        <div style="font-size:3rem;margin-bottom:1rem;">🌿</div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--forest);font-weight:300;margin-bottom:1rem;">Thank you</h2>
+        <p style="color:var(--text-soft);line-height:1.8;font-size:0.9rem;margin-bottom:2rem;">Your booking request has been received. I'll be in touch within 24 hours to confirm your session.</p>
+        <button class="btn-primary" onclick="closeModal()" style="border:none;cursor:pointer;">Close</button>
+      </div>`;
+  }
+</script>
+</body>
+</html>
